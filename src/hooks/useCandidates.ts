@@ -86,7 +86,9 @@ export const useCandidate = (id: string) => {
   return useQuery({
     queryKey: ['candidate', id],
     queryFn: () => fetchCandidate(id),
-    enabled: !!id
+    enabled: !!id,
+    retry: 1,
+    staleTime: 0 // Always fetch fresh data
   });
 };
 

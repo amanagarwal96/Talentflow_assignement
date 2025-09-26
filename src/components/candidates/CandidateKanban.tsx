@@ -25,16 +25,6 @@ const STAGES = [
   { id: 'rejected', title: 'Rejected', color: 'bg-rose-100 dark:bg-rose-900' },
 ];
 
-// ✅ Mock seed candidates (fallback)
-const SEED_CANDIDATES = [
-  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', stage: 'applied' },
-  { id: '2', name: 'Bob Smith', email: 'bob@example.com', stage: 'screen' },
-  { id: '3', name: 'Charlie Brown', email: 'charlie@example.com', stage: 'tech' },
-  { id: '4', name: 'Dana White', email: 'dana@example.com', stage: 'offer' },
-  { id: '5', name: 'Evan Green', email: 'evan@example.com', stage: 'hired' },
-  { id: '6', name: 'Fiona Black', email: 'fiona@example.com', stage: 'rejected' },
-];
-
 interface CandidateKanbanProps {
   sidebarCollapsed: boolean;
 }
@@ -45,8 +35,8 @@ export const CandidateKanban: React.FC<CandidateKanbanProps> = ({ sidebarCollaps
 
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
-  // 🔹 Use API data if available, else fallback to mock
-  const candidates = candidatesData?.data?.length ? candidatesData.data : SEED_CANDIDATES;
+  // Use real candidate data from the database
+  const candidates = candidatesData?.data || [];
 
   // 🔹 Ref + state to check if scroll is needed
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -85,10 +75,19 @@ export const CandidateKanban: React.FC<CandidateKanbanProps> = ({ sidebarCollaps
     updateMutation.mutate({ id: candidateId, stage: newStage as any });
   };
 
-  if (isLoading && !candidatesData) {
+  if (isLoading) {
     return (
       <div className="flex justify-center py-12">
         <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (!candidates.length) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-gray-500 text-lg">No candidates found</div>
+        <p className="text-gray-400 mt-2">Try refreshing the page or check if candidates are properly seeded.</p>
       </div>
     );
   }

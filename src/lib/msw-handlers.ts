@@ -166,15 +166,16 @@ export const handlers = [
   http.get('/api/candidates/:id', async ({ params }) => {
     await delay();
     const { id } = params;
-    console.log('MSW: Fetching candidate with ID:', id);
     
-    const candidate = await db.candidates.get(params.id as string);
-    console.log('MSW: Found candidate:', candidate);
+    const candidate = await db.candidates.get(id as string);
     
     if (!candidate) {
-      console.log('MSW: Candidate not found, available candidates:', await db.candidates.limit(5).toArray());
+      console.log('MSW: Candidate not found with ID:', id);
+      console.log('MSW: Total candidates in DB:', await db.candidates.count());
       return HttpResponse.json({ error: 'Not found' }, { status: 404 });
     }
+    
+    console.log('MSW: Found candidate:', candidate.name, 'with ID:', candidate.id);
     return HttpResponse.json(candidate);
   }),
 
