@@ -4,7 +4,7 @@ A modern, production-ready frontend hiring platform built with React, TypeScript
 
 ## Live Demo
 
-**Deployed Application**: [https://talentflow-hiring.vercel.app](https://talentflow-hiring.vercel.app)
+**Deployed Application**: [https://minihiring-platform.netlify.app/]
 
 ## Architecture Overview
 
@@ -77,7 +77,7 @@ A modern, production-ready frontend hiring platform built with React, TypeScript
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/talentflow.git
+git clone https://github.com/amanagarwal96/Talentflow_assignement/
 cd talentflow
 
 # Install dependencies
@@ -270,18 +270,6 @@ npm run test:e2e     # Run E2E tests
 - Add tests for new features
 - Update documentation for API changes
 - Ensure accessibility compliance
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- **MSW Team**: Excellent API mocking solution
-- **Dexie**: Robust IndexedDB wrapper
-- **React Query**: Superior state management
-- **dnd-kit**: Accessible drag-and-drop
-- **Tailwind CSS**: Rapid UI development
 
 ---
 
