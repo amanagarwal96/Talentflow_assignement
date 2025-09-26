@@ -165,8 +165,14 @@ export const handlers = [
 
   http.get('/api/candidates/:id', async ({ params }) => {
     await delay();
+    const { id } = params;
+    console.log('MSW: Fetching candidate with ID:', id);
+    
     const candidate = await db.candidates.get(params.id as string);
+    console.log('MSW: Found candidate:', candidate);
+    
     if (!candidate) {
+      console.log('MSW: Candidate not found, available candidates:', await db.candidates.limit(5).toArray());
       return HttpResponse.json({ error: 'Not found' }, { status: 404 });
     }
     return HttpResponse.json(candidate);

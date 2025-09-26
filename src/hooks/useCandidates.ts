@@ -62,11 +62,31 @@ const fetchTimeline = async (candidateId: string): Promise<TimelineEntry[]> => {
   return data.map((t: any) => ({ ...t, timestamp: t.timestamp ? new Date(t.timestamp) : new Date() }));
 };
 
+const fetchCandidate = async (id: string): Promise<Candidate> => {
+  const response = await fetch(`/api/candidates/${id}`);
+
+  if (!response.ok) {
+    const error: ApiError = await response.json();
+    throw new Error(error.error || 'Failed to fetch candidate');
+  }
+
+  const candidate = await response.json();
+  return { ...candidate, createdAt: candidate.createdAt ? new Date(candidate.createdAt) : new Date() };
+};
+
 export const useCandidates = (params: CandidatesParams = {}) => {
   const { search = '', stage = '', jobId = '', page = 1, pageSize = 50 } = params;
   return useQuery({
     queryKey: ['candidates', search, stage, jobId, page, pageSize],
     queryFn: () => fetchCandidates({ search, stage, jobId, page, pageSize })
+  });
+};
+
+export const useCandidate = (id: string) => {
+  return useQuery({
+    queryKey: ['candidate', id],
+    queryFn: () => fetchCandidate(id),
+    enabled: !!id
   });
 };
 

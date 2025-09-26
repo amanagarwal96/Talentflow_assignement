@@ -49,8 +49,9 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({ candidate }) => {
         
         <Link
           to={`/candidates/${candidate.id}`}
-          className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded transition-colors"
+          className="p-1 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900 rounded transition-colors z-10 relative"
           onClick={(e) => e.stopPropagation()}
+          title={`View profile for ${candidate.name}`}
         >
           <ExternalLink className="w-3 h-3" />
         </Link>
